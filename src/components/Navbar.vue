@@ -9,9 +9,9 @@
         <div
           class="accountUserIcon rounded-full border my-auto h-8 w-8 bg-gray-300"
         ></div>
-        <div class="ml-1 flex flex-col">
-          <p class="font-bold">{{ firstLastName }}</p>
-          <p class="font-light">firstlastname@bonline.com</p>
+        <div class="ml-2 flex flex-col">
+          <p class="font-bold">{{ fullName }}</p>
+          <p class="font-light text-xs">{{ computedEmailAddress }}</p>
         </div>
       </div>
     </div>
@@ -23,8 +23,22 @@ export default {
   name: "AppNavbar",
   data() {
     return {
-      firstLastName: "First Lastname data",
+      firstName: "Werner",
+      LastName: "van der Merwe",
     };
+  },
+  computed: {
+    fullName() {
+      return this.firstName.concat(" ", this.LastName);
+    },
+    computedEmailAddress() {
+      return this.firstName
+        .concat(this.LastName)
+        .split(" ")
+        .join("")
+        .toLowerCase()
+        .concat("@bonline.com");
+    },
   },
 };
 </script>
