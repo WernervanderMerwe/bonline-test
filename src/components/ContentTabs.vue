@@ -1,5 +1,5 @@
 <template>
-  <div class="px-6 py-2 border-b flex row-auto gap-2 h-20">
+  <div class="px-6 py-4 border-b flex row-auto gap-2">
     <div
       class="border rounded-md p-1 px-2 bg-white"
       v-for="account in jsonData"
@@ -8,17 +8,24 @@
       <div class="flex row-auto gap-2">
         <p class="font-bold text-blue-400">{{ account.business_name }}</p>
         <div
-          class="border rounded-full px-2 text-xs font-semibold my-auto"
+          class="border rounded-full px-1 text-xs font-medium my-auto"
           :class="{
             'text-green-400': account.account_status === 'Live',
             'text-yellow-400': account.account_status === 'Suspended',
             'text-red-400': account.account_status === 'Cancelled',
           }"
         >
-          {{ account.account_status }}
+          {{
+            account.account_status === "Live"
+              ? "Active"
+              : account.account_status
+          }}
         </div>
       </div>
-      <p class="text-xs leading-6">Account ID : {{ account.account_id }}</p>
+      <p class="text-xs leading-6">
+        Account ID :
+        {{ account.account_id }}
+      </p>
     </div>
 
     <!-- <div class="border rounded-md p-1 px-2 bg-white">

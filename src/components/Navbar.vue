@@ -4,7 +4,9 @@
       <img alt="bOnline logo" src="./../assets/bOnline-logo.svg" />
     </div>
     <div class="m-4 col-end-4 flex">
-      <div class="bellIcon border-r mr-4 my-auto bg-slate-300 w-8 h-8"></div>
+      <div class="bellIcon border-r mr-4 my-auto">
+        <!-- <font-awesome-icon icon="fa-regular fa-bell" /> -->
+      </div>
       <div class="accountUser flex flex-row border-l pl-4">
         <div
           class="accountUserIcon rounded-full border my-auto h-8 w-8 bg-gray-300"
