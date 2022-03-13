@@ -8,16 +8,18 @@
     </div>
 
     <div class="p-6">
-      <p class="font-bold">Next invoice : 10 Feb 2022</p>
+      <p class="font-bold">
+        Next invoice : {{ accountData.next_invoice_date }}
+      </p>
     </div>
 
     <div class="grid grid-cols-2 gap-4 px-6 pb-6">
       <div class="border p-4 rounded-md bg-slate-50">
         <p class="font-bold">Current Balance</p>
-        <p class="font-bold text-2xl">$59.00</p>
+        <p class="font-bold text-2xl">${{ accountData.balance }}</p>
         <p class="text-xs">
-          <i class="border bg-slate-300">lock</i>&nbsp; This is a secure 256-bit
-          SSL encrypted payment. You're Safe.
+          <font-awesome-icon icon="fa-solid fa-lock" />&nbsp; This is a secure
+          256-bit SSL encrypted payment. You're Safe.
         </p>
         <button
           class="bg-blue-400 rounded-md px-4 py-1 text-white mt-4 font-semibold"
@@ -27,17 +29,34 @@
       </div>
 
       <div class="border p-4 rounded-md bg-slate-50">
-        <div class="flex row-auto gap-2 mb-3">
+        <div class="flex row-auto gap-1 mb-3">
           <p class="font-bold">Payment Method</p>
+
           <div
+            v-if="accountData.payment_method === 'MP'"
+            class="font-bold text-xs border bg-white rounded-full px-2 my-auto"
+          >
+            Monthly
+          </div>
+
+          <div
+            v-else-if="accountData.payment_method === 'DD'"
+            class="font-bold text-xs border bg-white rounded-full my-auto text-center"
+          >
+            Direct Debit
+          </div>
+
+          <div
+            v-else
             class="font-bold text-xs border bg-white rounded-full px-2 my-auto"
           >
             Annual
           </div>
         </div>
         <p class="text-xs">
-          <i class="border bg-slate-300">Light</i>&nbsp; Guide: to manage your
-          payments more easily, we recommend switching to Direct Debit
+          <font-awesome-icon icon="fa-solid fa-lightbulb" />
+          &nbsp; Guide: to manage your payments more easily, we recommend
+          switching to Direct Debit
         </p>
         <button
           class="bg-blue-400 rounded-md px-4 py-1 text-white mt-4 font-semibold"
@@ -52,5 +71,11 @@
 <script>
 export default {
   name: "PaymentDetails",
+  props: {
+    accountData: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>

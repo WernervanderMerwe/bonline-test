@@ -1,9 +1,10 @@
 <template>
   <div class="px-6 py-4 border-b flex row-auto gap-2">
     <div
-      class="border rounded-md p-1 px-2 bg-white"
+      class="border rounded-md p-1 px-2 bg-white hover:cursor-pointer"
       v-for="account in jsonData"
       :key="account.account_id"
+      @click="saveAccountData(account)"
     >
       <div class="flex row-auto gap-2">
         <p class="font-bold text-blue-400">{{ account.business_name }}</p>
@@ -22,45 +23,34 @@
           }}
         </div>
       </div>
+
       <p class="text-xs leading-6">
         Account ID :
         {{ account.account_id }}
       </p>
     </div>
-
-    <!-- <div class="border rounded-md p-1 px-2 bg-white">
-      <div class="flex row-auto gap-2">
-        <p class="font-bold text-blue-400">Mobis Valium</p>
-        <div
-          class="border rounded-full px-2 text-xs font-bold my-auto text-green-300"
-        >
-          Active
-        </div>
-      </div>
-      <p class="text-xs leading-6">Account ID : 63531691</p>
-    </div>
-
-    <div class="border rounded-md p-1 px-2 bg-white">
-      <div class="flex row-auto gap-2">
-        <p class="font-bold text-blue-400">Jereme Hunt 3</p>
-        <div
-          class="border rounded-full px-2 text-xs font-bold my-auto text-green-300"
-        >
-          Active
-        </div>
-      </div>
-      <p class="text-xs leading-6">Account ID : 63531691</p>
-    </div> -->
   </div>
 </template>
 
 <script>
+import { eventBus } from "./../main";
+
 export default {
-  name: "ContentTabs",
+  name: "AccountTabs",
   props: {
     jsonData: {
       type: Array,
       required: true,
+    },
+  },
+  data() {
+    return {
+      accountData: {},
+    };
+  },
+  methods: {
+    saveAccountData(account) {
+      eventBus.$emit("changeAccountData", account);
     },
   },
 };

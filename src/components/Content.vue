@@ -4,32 +4,40 @@
       <p class="font-bold text-2xl">Billing</p>
       <p>Overview of your accounts</p>
     </div>
-    <content-tabs :jsonData="data"></content-tabs>
+    <account-tabs :jsonData="data"></account-tabs>
     <div class="grid grid-cols-3 px-6 gap-4 pt-4">
-      <payment-details></payment-details>
-      <my-products></my-products>
+      <payment-details :accountData="accountData"></payment-details>
+      <my-products :accountData="accountData"></my-products>
       <billing-history></billing-history>
     </div>
   </div>
 </template>
 
 <script>
-import ContentTabs from "./ContentTabs.vue";
+import { eventBus } from "./../main.js";
+
+import AccountTabs from "./AccountTabs.vue";
 import PaymentDetails from "./PaymentDetails.vue";
 import MyProducts from "./MyProducts.vue";
 import BillingHistory from "./BillingHistory.vue";
 
-import data from "./../../instructions/Data.json";
+import Data from "./../../instructions/Data.json";
 
 export default {
   name: "appContent",
   data() {
     return {
-      data: data,
+      data: Data,
+      accountData: {},
     };
   },
+  created() {
+    eventBus.$on("changeAccountData", (accountData) => {
+      this.accountData = accountData;
+    });
+  },
   components: {
-    contentTabs: ContentTabs,
+    accountTabs: AccountTabs,
     paymentDetails: PaymentDetails,
     myProducts: MyProducts,
     billingHistory: BillingHistory,

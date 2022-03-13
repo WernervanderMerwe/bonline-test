@@ -3,11 +3,11 @@
     <!-- Customize colors later -->
     <!-- animate the rounded edges on hover? -->
     <button class="py-1 rounded-md hover:bg-blue-400 hover:text-white">
-      <!-- <font-awesome-icon icon="fa-solid fa-house" /> -->
+      <font-awesome-icon icon="fa-solid fa-house" />
       &nbsp; Home
     </button>
     <button class="py-1 rounded-md bg-blue-400 text-white">
-      <i>icon</i>&nbsp; Billing
+      <font-awesome-icon icon="fa-solid fa-wallet" />&nbsp; Billing
     </button>
   </div>
 </template>

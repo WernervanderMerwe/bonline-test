@@ -4,8 +4,8 @@
       <img alt="bOnline logo" src="./../assets/bOnline-logo.svg" />
     </div>
     <div class="m-4 col-end-4 flex">
-      <div class="bellIcon border-r mr-4 my-auto">
-        <!-- <font-awesome-icon icon="fa-regular fa-bell" /> -->
+      <div class="bellIcon mr-4 my-auto">
+        <font-awesome-icon icon="fa-solid fa-bell" />
       </div>
       <div class="accountUser flex flex-row border-l pl-4">
         <div

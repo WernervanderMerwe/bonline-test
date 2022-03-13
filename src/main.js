@@ -3,10 +3,16 @@ import App from "./App.vue";
 import "./assets/tailwind.css";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHouse, faBell } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faBell,
+  faWallet,
+  faLightbulb,
+  faLock,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faHouse, faBell);
+library.add(faHouse, faBell, faWallet, faLightbulb, faLock);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
