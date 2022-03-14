@@ -9,10 +9,22 @@ import {
   faWallet,
   faLightbulb,
   faLock,
+  faDiagramProject,
+  faPhone,
+  faLaptop,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faHouse, faBell, faWallet, faLightbulb, faLock);
+library.add(
+  faHouse,
+  faBell,
+  faWallet,
+  faLightbulb,
+  faLock,
+  faDiagramProject,
+  faPhone,
+  faLaptop
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

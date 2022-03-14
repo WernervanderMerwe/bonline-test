@@ -8,23 +8,31 @@
     <div
       v-for="product in accountData.products"
       :key="product.product_detail"
-      class="border-b mx-4 py-4 font-semibold text-xs"
+      class="border-b mx-4 py-4"
     >
-      <i>Icon</i>&nbsp; {{ product.product_kind }} =
-      {{ product.product_detail }}
-    </div>
+      <div v-if="product.product_kind === 'TELCO'" class="flex">
+        <font-awesome-icon icon="fa-solid fa-diagram-project" />
+        <p class="ml-2 font-semibold text-xs">
+          Fibre = {{ product.product_detail }}
+        </p>
+      </div>
 
-    <!-- <div class="border-b mx-4 py-4 font-semibold text-xs">
-      <i>Icon</i>&nbsp; VoIP = 902903445
-    </div>
+      <div v-else-if="product.product_kind === 'VOIP'" class="flex">
+        <font-awesome-icon icon="fa-solid fa-phone" />
+        <p class="ml-2 font-semibold text-xs">
+          {{ product.product_kind | productsCapitalize }} =
+          {{ product.product_detail }}
+        </p>
+      </div>
 
-    <div class="border-b mx-4 py-4 font-semibold text-xs">
-      <i>Icon</i>&nbsp; Fibre = SW298BE
+      <div v-else-if="product.product_kind === 'WEBSITE'" class="flex">
+        <font-awesome-icon icon="fa-solid fa-laptop" />
+        <p class="ml-2 font-semibold text-xs">
+          {{ product.product_kind | productsCapitalize }} =
+          {{ product.product_detail }}
+        </p>
+      </div>
     </div>
-
-    <div class="border-b mx-4 py-4 font-semibold text-xs">
-      <i>Icon</i>&nbsp; Website - www.webiste.com
-    </div> -->
   </div>
 </template>
 
@@ -35,6 +43,21 @@ export default {
     accountData: {
       type: Object,
       required: true,
+    },
+  },
+  filters: {
+    productsCapitalize(value) {
+      if (!value) {
+        return "";
+      }
+
+      if (value === "VOIP") {
+        return "VoIP";
+      }
+
+      value = value.toString();
+
+      return value.charAt(0).concat(value.slice(1).toLowerCase());
     },
   },
 };

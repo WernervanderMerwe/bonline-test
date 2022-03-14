@@ -16,11 +16,15 @@
     <div class="grid grid-cols-2 gap-4 px-6 pb-6">
       <div class="border p-4 rounded-md bg-slate-50">
         <p class="font-bold">Current Balance</p>
-        <p class="font-bold text-2xl">${{ accountData.balance }}</p>
-        <p class="text-xs">
-          <font-awesome-icon icon="fa-solid fa-lock" />&nbsp; This is a secure
-          256-bit SSL encrypted payment. You're Safe.
+        <p class="font-bold text-2xl">
+          £{{ accountData.balance | currencyfy }}
         </p>
+        <div class="flex mt-2">
+          <font-awesome-icon icon="fa-solid fa-lock" />
+          <p class="text-xs ml-2">
+            This is a secure 256-bit SSL encrypted payment. You're Safe.
+          </p>
+        </div>
         <button
           class="bg-blue-400 rounded-md px-4 py-1 text-white mt-4 font-semibold"
         >
@@ -53,11 +57,15 @@
             Annual
           </div>
         </div>
-        <p class="text-xs">
+
+        <div class="flex mt-2">
           <font-awesome-icon icon="fa-solid fa-lightbulb" />
-          &nbsp; Guide: to manage your payments more easily, we recommend
-          switching to Direct Debit
-        </p>
+          <p class="text-xs ml-2">
+            Guide: to manage your payments more easily, we recommend switching
+            to Direct Debit
+          </p>
+        </div>
+
         <button
           class="bg-blue-400 rounded-md px-4 py-1 text-white mt-4 font-semibold"
         >
@@ -75,6 +83,17 @@ export default {
     accountData: {
       type: Object,
       required: true,
+    },
+  },
+  filters: {
+    currencyfy(value) {
+      if (!value && value !== 0) {
+        return "";
+      }
+
+      value = value.toString();
+
+      return value.includes(".") ? value : value.concat(".00");
     },
   },
 };
