@@ -8,7 +8,7 @@
     <div class="grid grid-cols-3 px-6 gap-4 pt-4">
       <payment-details :accountData="accountData"></payment-details>
       <my-products :accountData="accountData"></my-products>
-      <billing-history></billing-history>
+      <billing-history :accountData="accountData"></billing-history>
     </div>
   </div>
 </template>

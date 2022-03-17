@@ -12,6 +12,7 @@ import {
   faDiagramProject,
   faPhone,
   faLaptop,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -23,7 +24,8 @@ library.add(
   faLock,
   faDiagramProject,
   faPhone,
-  faLaptop
+  faLaptop,
+  faDownload
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
