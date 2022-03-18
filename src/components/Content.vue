@@ -25,6 +25,12 @@ import Data from "./../../instructions/Data.json";
 
 export default {
   name: "appContent",
+  components: {
+    accountTabs: AccountTabs,
+    paymentDetails: PaymentDetails,
+    myProducts: MyProducts,
+    billingHistory: BillingHistory,
+  },
   data() {
     return {
       data: Data,
@@ -35,12 +41,7 @@ export default {
     eventBus.$on("changeAccountData", (accountData) => {
       this.accountData = accountData;
     });
-  },
-  components: {
-    accountTabs: AccountTabs,
-    paymentDetails: PaymentDetails,
-    myProducts: MyProducts,
-    billingHistory: BillingHistory,
+    eventBus.$emit("changeAccountData", this.data[0]);
   },
 };
 </script>

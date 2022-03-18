@@ -23,8 +23,8 @@
         >
           <td class="py-2">{{ data.date }}</td>
           <td class="py-2">{{ data.isInvoice ? "Invoice" : "Payment" }}</td>
-          <td class="py-2">£{{ data.amount }}</td>
-          <td class="py-2">£{{ data.balance }}</td>
+          <td class="py-2">£{{ data.amount | currencyPadding }}</td>
+          <td class="py-2">£{{ data.balance | currencyPadding }}</td>
           <td class="py-2">{{ data.reference }}</td>
           <td class="py-2">
             <font-awesome-icon icon="fa-solid fa-download" />
@@ -34,9 +34,7 @@
     </div>
 
     <div class="flex justify-center pb-2">
-      <div
-        class="flex w-8 h-8 bg-blue-400 text-white text-center text-sm rounded-md"
-      >
+      <div class="flex w-8 h-8 bg-blue-400 text-white text-sm rounded-md">
         <div class="m-auto">1</div>
       </div>
     </div>
@@ -44,6 +42,8 @@
 </template>
 
 <script>
+import { eventBus } from "./../main.js";
+
 export default {
   name: "BilingHistory",
   props: {
@@ -52,10 +52,54 @@ export default {
       required: true,
     },
   },
-  // created() {
+  data() {
+    return {
+      billingData: [
+        {
+          date: "2021-11-22",
+          isInvoice: true,
+          amount: null,
+          balance: null,
+          reference: "8989UDEJ",
+        },
+        {
+          date: "2021-12-22",
+          isInvoice: true,
+          amount: null,
+          balance: null,
+          reference: "8990UDEJ",
+        },
+        {
+          date: "2022-01-22",
+          isInvoice: true,
+          amount: null,
+          balance: null,
+          reference: "8991UDEJ",
+        },
+        {
+          date: "2022-01-22",
+          isInvoice: false,
+          amount: null,
+          balance: null,
+          reference: "8992UDEJ",
+        },
+        {
+          date: "2022-02-22",
+          isInvoice: true,
+          amount: null,
+          balance: null,
+          reference: "8993UDEJ",
+        },
+      ],
+    };
+  },
   computed: {
-    billingDataCompute() {
-      const amount = 5 * this.accountData.products.length;
+    computedBillingData() {
+      // amount is worked out according to how many products an account has
+      const amount = 4.75 * this.accountData.products.length;
+      console.log("computed fired");
+      // console.log("accountData:", this.accountData);
+      console.log("billingData:", this.billingData);
 
       return this.billingData.forEach((bill, i, arr) => {
         bill.amount = amount;
@@ -75,42 +119,65 @@ export default {
       });
     },
   },
-  data() {
-    return {
-      billingData: [
-        {
-          date: "2021-12-22",
-          isInvoice: true,
-          amount: null,
-          reference: "8989UDEJ",
-        },
-        {
-          date: "2022-01-22",
-          isInvoice: true,
-          amount: null,
-          reference: "8990UDEJ",
-        },
-        {
-          date: "2022-02-22",
-          isInvoice: true,
-          amount: null,
-          reference: "8991UDEJ",
-        },
-        {
-          date: "2022-02-22",
-          isInvoice: false,
-          amount: null,
+  created() {
+    console.log("created lifecycle hook");
+    this.computedBillingData;
 
-          reference: "8992UDEJ",
-        },
-        {
-          date: "2022-03-22",
-          isInvoice: true,
-          amount: null,
-          reference: "8993UDEJ",
-        },
-      ],
-    };
+    eventBus.$on("payNow", (invoiceDate) => {
+      if (this.billingData[this.billingData.length - 1].balance === 0) {
+        return;
+      }
+
+      const obj = {
+        date: invoiceDate,
+        isInvoice: false,
+        reference: "8994UDEJ",
+      };
+
+      this.billingData.push(obj);
+      this.computedBillingData;
+    });
+    // will change when I bind the data to each account like with the introduction of Vue
+    eventBus.$on("changeAccountData", () => {
+      this.computedBillingData;
+
+      if (this.billingData.length > 5) {
+        this.billingData.pop();
+      }
+    });
+    eventBus.$emit(
+      "updateBalance",
+      this.billingData[this.billingData.length - 1].balance
+    );
+  },
+  mounted() {
+    console.log("mounted lifecycle hook");
+  },
+  beforeUpdate() {
+    console.log("beforeUpdate lifecycle hook");
+    console.log(this.billingData[this.billingData.length - 1].balance);
+    eventBus.$emit(
+      "updateBalance",
+      this.billingData[this.billingData.length - 1].balance
+    );
+    this.computedBillingData;
+  },
+  filters: {
+    currencyPadding(value) {
+      if (value === 0) {
+        return "0.00";
+      }
+
+      if (!value) {
+        return "";
+      }
+
+      const split = value.toString().split(".");
+      const poppedAndPadded = split.pop().padEnd(2, "0");
+      const concatted = split.concat(poppedAndPadded).join(".");
+
+      return concatted;
+    },
   },
 };
 </script>
