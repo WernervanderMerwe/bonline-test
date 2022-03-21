@@ -46,12 +46,12 @@ import { eventBus } from "./../main.js";
 
 export default {
   name: "BilingHistory",
-  props: {
-    accountData: {
-      type: Object,
-      required: true,
-    },
-  },
+  // props: {
+  //   accountData: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  // },
   data() {
     return {
       billingData: [
@@ -91,36 +91,38 @@ export default {
           reference: "8993UDEJ",
         },
       ],
+      accountData: {},
     };
   },
   computed: {
     computedBillingData() {
       // amount is worked out according to how many products an account has
-      const amount = 4.75 * this.accountData.products.length;
-      console.log("computed fired");
-      // console.log("accountData:", this.accountData);
-      console.log("billingData:", this.billingData);
 
-      return this.billingData.forEach((bill, i, arr) => {
-        bill.amount = amount;
+      if (this.accountData.account_id) {
+        const amount = 4.75 * this.accountData.products.length;
 
-        if (i === 0) {
-          bill.balance = bill.amount;
-        }
+        return this.billingData.forEach((bill, i, arr) => {
+          bill.amount = amount;
 
-        if (i > 0 && bill.isInvoice) {
-          bill.balance = arr[i - 1].balance + bill.amount;
-        }
+          if (i === 0) {
+            bill.balance = bill.amount;
+          }
 
-        if (!bill.isInvoice) {
-          bill.amount = arr[i - 1].balance;
-          bill.balance = arr[i - 1].balance - bill.amount;
-        }
-      });
+          if (i > 0 && bill.isInvoice) {
+            bill.balance = arr[i - 1].balance + bill.amount;
+          }
+
+          if (!bill.isInvoice) {
+            bill.amount = arr[i - 1].balance;
+            bill.balance = arr[i - 1].balance - bill.amount;
+          }
+        });
+      } else {
+        return "";
+      }
     },
   },
   created() {
-    console.log("created lifecycle hook");
     this.computedBillingData;
 
     eventBus.$on("payNow", (invoiceDate) => {
@@ -137,8 +139,8 @@ export default {
       this.billingData.push(obj);
       this.computedBillingData;
     });
-    // will change when I bind the data to each account like with the introduction of Vue
-    eventBus.$on("changeAccountData", () => {
+    eventBus.$on("changeAccountData", (account) => {
+      this.accountData = account;
       this.computedBillingData;
 
       if (this.billingData.length > 5) {
@@ -150,17 +152,11 @@ export default {
       this.billingData[this.billingData.length - 1].balance
     );
   },
-  mounted() {
-    console.log("mounted lifecycle hook");
-  },
   beforeUpdate() {
-    console.log("beforeUpdate lifecycle hook");
-    console.log(this.billingData[this.billingData.length - 1].balance);
     eventBus.$emit(
       "updateBalance",
       this.billingData[this.billingData.length - 1].balance
     );
-    this.computedBillingData;
   },
   filters: {
     currencyPadding(value) {

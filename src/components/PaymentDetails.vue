@@ -93,7 +93,7 @@ export default {
   },
   data() {
     return {
-      balance: 0,
+      balance: null,
     };
   },
   filters: {
@@ -116,8 +116,10 @@ export default {
   },
   methods: {
     payNow() {
-      eventBus.$emit("payNow", this.accountData.next_invoice_date);
-      this.balance = 0;
+      if (this.balance !== null) {
+        eventBus.$emit("payNow", this.accountData.next_invoice_date);
+        this.balance = 0;
+      }
     },
   },
 };

@@ -57,8 +57,10 @@ export default {
     };
   },
   created() {
-    // eventBus.$emit("changeAccountData", this.jsonData[0]);
     this.activeTab = this.jsonData[0].account_id;
+  },
+  mounted() {
+    eventBus.$emit("changeAccountData", this.jsonData[0]);
   },
   methods: {
     saveAccountData(account) {
