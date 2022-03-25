@@ -23,8 +23,8 @@
         >
           <td class="py-2">{{ data.date }}</td>
           <td class="py-2">{{ data.isInvoice ? "Invoice" : "Payment" }}</td>
-          <td class="py-2">£{{ data.amount | currencyPadding }}</td>
-          <td class="py-2">£{{ data.balance | currencyPadding }}</td>
+          <td class="py-2">£{{ data.amount | currencyfy }}</td>
+          <td class="py-2">£{{ data.balance | currencyfy }}</td>
           <td class="py-2">{{ data.reference }}</td>
           <td class="py-2">
             <font-awesome-icon icon="fa-solid fa-download" />
@@ -97,7 +97,6 @@ export default {
   computed: {
     computedBillingData() {
       // amount is worked out according to how many products an account has
-
       if (this.accountData.account_id) {
         const amount = 4.75 * this.accountData.products.length;
 
@@ -159,20 +158,8 @@ export default {
     );
   },
   filters: {
-    currencyPadding(value) {
-      if (value === 0) {
-        return "0.00";
-      }
-
-      if (!value) {
-        return "";
-      }
-
-      const split = value.toString().split(".");
-      const poppedAndPadded = split.pop().padEnd(2, "0");
-      const concatted = split.concat(poppedAndPadded).join(".");
-
-      return concatted;
+    currencyfy(value) {
+      return value.toFixed(2);
     },
   },
 };

@@ -1,9 +1,8 @@
 <template>
-  <!-- <div class="grid grid-cols-2 gap-4 px-6 pb-6"> -->
   <div class="border p-4 rounded-md bg-slate-50">
     <p class="font-bold">Current Balance</p>
     <div class="flex">
-      <p class="font-bold text-2xl">£{{ balance | currencyPadding }}</p>
+      <p class="font-bold text-2xl">£{{ balance | currencyfy }}</p>
       <p class="text-xs pl-2">(Note: last balance in billing history)</p>
     </div>
     <div class="flex mt-2">
@@ -19,7 +18,6 @@
       Pay now
     </button>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -41,18 +39,8 @@ export default {
     };
   },
   filters: {
-    currencyPadding(value) {
-      if (value === 0) {
-        return "0.00";
-      }
-
-      if (value) {
-        const split = value.toString().split(".");
-        const poppedAndPadded = split.pop().padEnd(2, "0");
-        const concatted = split.concat(poppedAndPadded).join(".");
-
-        return concatted;
-      }
+    currencyfy(value) {
+      return value.toFixed(2);
     },
   },
   created() {
