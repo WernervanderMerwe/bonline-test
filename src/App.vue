@@ -10,7 +10,7 @@
       <p class="text-center font-semibold">Built by Werner van der Merwe</p>
       <a
         href="https://github.com/WernervanderMerwe/bonline-test"
-        class="flex justify-center font-bold text-blue-400 underline"
+        class="flex justify-center font-bold text-blue-400 underline pb-4"
         >GitHub repo link</a
       >
     </footer>
