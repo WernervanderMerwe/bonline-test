@@ -5,6 +5,15 @@
       <app-sidebar></app-sidebar>
       <app-content></app-content>
     </div>
+    <hr class="my-4 mx-6" />
+    <footer class="bg-slate-50">
+      <p class="text-center font-semibold">Built by Werner van der Merwe</p>
+      <a
+        href="https://github.com/WernervanderMerwe/bonline-test"
+        class="flex justify-center font-bold text-blue-400 underline"
+        >GitHub repo link</a
+      >
+    </footer>
   </div>
 </template>
 
